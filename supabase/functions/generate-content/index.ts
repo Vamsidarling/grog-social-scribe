@@ -1,3 +1,4 @@
+
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 
 const GROG_API_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions"
@@ -148,12 +149,23 @@ serve(async (req) => {
 
     return new Response(
       JSON.stringify(data),
-      { headers: { 'Content-Type': 'application/json' } },
+      { 
+        headers: { 
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        } 
+      },
     )
   } catch (error) {
     return new Response(
       JSON.stringify({ error: error.message }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+      { 
+        status: 500, 
+        headers: { 
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        } 
+      }
     )
   }
 })

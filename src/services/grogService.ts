@@ -1,6 +1,7 @@
+
 import { toast } from "sonner";
 
-const EDGE_FUNCTION_URL = "https://your-project-ref.supabase.co/functions/v1/generate-content";
+const EDGE_FUNCTION_URL = "https://pliswlanuinhtllduomm.supabase.co/functions/v1/generate-content";
 
 export const generateContent = async ({ prompt, platform }: { prompt: string, platform: string }): Promise<string | null> => {
   try {
@@ -8,8 +9,8 @@ export const generateContent = async ({ prompt, platform }: { prompt: string, pl
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Add the anon key from your Supabase project
-        "Authorization": `Bearer ${process.env.VITE_SUPABASE_ANON_KEY}`
+        // Using the Supabase anon key directly
+        "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsaXN3bGFudWluaHRsbGR1b21tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NjcxNzQsImV4cCI6MjA2MTM0MzE3NH0.hgUZVMSIHo31Ij5pQfTz-hankSjcWsPPZiSlWaKJf00`
       },
       body: JSON.stringify({
         prompt,
