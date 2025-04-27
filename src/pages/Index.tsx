@@ -6,12 +6,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import ApiKeyForm from '@/components/ApiKeyForm';
 import PlatformCard from '@/components/PlatformCard';
-import { generateContent, getApiKey } from '@/services/grogService';
+import { generateContent } from '@/services/grogService';
+import { supabase } from "@/integrations/supabase/client";
 
 const platforms = ['twitter', 'instagram', 'facebook', 'linkedin'];
 
 const Index = () => {
-  const [isConnected, setIsConnected] = useState(false);
+  // Since we're now using Supabase, we can assume we're always connected
+  const [isConnected, setIsConnected] = useState(true);
   const [userInput, setUserInput] = useState('');
   const [generatingPlatform, setGeneratingPlatform] = useState<string | null>(null);
   const [generatedContent, setGeneratedContent] = useState<Record<string, string | null>>({
@@ -20,13 +22,6 @@ const Index = () => {
     facebook: null,
     linkedin: null,
   });
-
-  // Check if API key is available
-  useEffect(() => {
-    if (getApiKey()) {
-      setIsConnected(true);
-    }
-  }, []);
 
   const handleGenerate = async (platform: string) => {
     if (!userInput.trim()) {
@@ -92,18 +87,7 @@ const Index = () => {
     }
   };
 
-  if (!isConnected) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-4">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2 gradient-text">Social Media Scribe</h1>
-          <p className="text-xl text-muted-foreground">Generate engaging social media content with AI</p>
-        </div>
-        <ApiKeyForm onSuccess={() => setIsConnected(true)} />
-      </div>
-    );
-  }
-
+  // Since we're now using Supabase backend, we don't need the API key form anymore
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="text-center mb-10">
