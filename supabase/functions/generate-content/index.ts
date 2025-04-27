@@ -3,6 +3,11 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 
 const GROG_API_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions"
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
+
 interface RequestBody {
   prompt: string;
   platform: string;
@@ -99,14 +104,10 @@ The content should be ready to post as-is, with no additional editing needed.`;
 }
 
 serve(async (req) => {
-  // Handle CORS
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response('ok', {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST',
-        'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-      }
+      headers: corsHeaders
     })
   }
 
@@ -116,7 +117,7 @@ serve(async (req) => {
     if (!prompt || !platform) {
       return new Response(
         JSON.stringify({ error: 'Missing prompt or platform' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
@@ -151,21 +152,23 @@ serve(async (req) => {
       JSON.stringify(data),
       { 
         headers: { 
+          ...corsHeaders,
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
         } 
       },
     )
   } catch (error) {
+    console.error('Error in generate-content function:', error);
     return new Response(
       JSON.stringify({ error: error.message }),
       { 
         status: 500, 
         headers: { 
+          ...corsHeaders,
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
         } 
       }
     )
   }
 })
+
