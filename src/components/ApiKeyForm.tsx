@@ -1,70 +1,26 @@
 
-import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { testConnection, setApiKey, getApiKey } from "@/services/grogService";
+import React from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface ApiKeyFormProps {
-  onSuccess: () => void;
-}
-
-const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onSuccess }) => {
-  const [apiKey, setApiKeyState] = useState('');
-  const [isTesting, setIsTesting] = useState(false);
-  
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsTesting(true);
-    
-    // Save the API key
-    setApiKey(apiKey);
-    
-    // Test the connection
-    const success = await testConnection();
-    
-    setIsTesting(false);
-    if (success) {
-      onSuccess();
-    }
-  };
+const ApiKeyForm: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
+  // Automatically proceed since we don't need API key input anymore
+  React.useEffect(() => {
+    onSuccess();
+  }, [onSuccess]);
 
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle className="gradient-text">Connect to Grog LLM</CardTitle>
+        <CardTitle className="gradient-text">Welcome to Social Media Scribe</CardTitle>
         <CardDescription>
-          Enter your Grog API key to start generating social media content
+          Generate engaging social media content with AI
         </CardDescription>
       </CardHeader>
-      <form onSubmit={handleSubmit}>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <label htmlFor="apiKey" className="text-sm font-medium">
-                API Key
-              </label>
-              <Input
-                id="apiKey"
-                type="password"
-                placeholder="Enter your Grog API key"
-                value={apiKey}
-                onChange={(e) => setApiKeyState(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button 
-            type="submit" 
-            className="w-full shiny-button text-white"
-            disabled={isTesting || !apiKey}
-          >
-            {isTesting ? "Testing Connection..." : "Connect"}
-          </Button>
-        </CardFooter>
-      </form>
+      <CardContent>
+        <p className="text-center text-muted-foreground">
+          Loading your content generation workspace...
+        </p>
+      </CardContent>
     </Card>
   );
 };
