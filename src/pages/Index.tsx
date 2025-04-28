@@ -29,6 +29,12 @@ const Index = () => {
     setGeneratingPlatform(platform);
     
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast.error("Please sign in to generate content");
+        return;
+      }
+
       const content = await generateContent({
         prompt: userInput,
         platform
@@ -39,7 +45,8 @@ const Index = () => {
         await supabase.from('content_history').insert({
           platform,
           prompt: userInput,
-          generated_content: content
+          generated_content: content,
+          user_id: user.id
         });
 
         // Update UI
@@ -65,6 +72,12 @@ const Index = () => {
     setGeneratingPlatform('all');
     
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast.error("Please sign in to generate content");
+        return;
+      }
+
       const results = await Promise.all(
         platforms.map(async (platform) => {
           const content = await generateContent({
@@ -77,7 +90,8 @@ const Index = () => {
             await supabase.from('content_history').insert({
               platform,
               prompt: userInput,
-              generated_content: content
+              generated_content: content,
+              user_id: user.id
             });
           }
           
