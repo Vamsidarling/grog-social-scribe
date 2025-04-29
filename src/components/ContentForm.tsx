@@ -35,7 +35,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
           <Button 
             onClick={handleGenerateAll} 
             className="shiny-button text-white"
-            disabled={isGenerating === true || isGenerating === 'all' || !isAuthenticated}
+            disabled={isGenerating === true || isGenerating === 'all'}
           >
             {isGenerating === 'all' ? "Generating..." : "Generate All Platforms"}
           </Button>

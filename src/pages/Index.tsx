@@ -21,7 +21,7 @@ const Index = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Header isAuthenticated={isAuthenticated} />
+      <Header isAuthenticated={isAuthenticated} showBackButton={false} />
       
       <div className="text-center mb-8">
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
