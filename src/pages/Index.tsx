@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import PlatformCard from '@/components/PlatformCard';
 import { generateContent } from '@/services/grogService';
 import { supabase } from "@/integrations/supabase/client";
-import { User } from "lucide-react";
+import { User, LogIn, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const platforms = ['twitter', 'instagram', 'facebook', 'linkedin'];
@@ -19,8 +20,23 @@ const Index = () => {
     facebook: null,
     linkedin: null,
   });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
+  async function checkAuthStatus() {
+    const { data: { session } } = await supabase.auth.getSession();
+    setIsAuthenticated(!!session);
+  }
 
   const handleGenerate = async (platform: string) => {
+    if (!isAuthenticated) {
+      toast.error("Please sign in to generate content");
+      return;
+    }
+
     if (!userInput.trim()) {
       toast.error("Please enter some content to generate from");
       return;
@@ -64,6 +80,11 @@ const Index = () => {
   };
 
   const handleGenerateAll = async () => {
+    if (!isAuthenticated) {
+      toast.error("Please sign in to generate content");
+      return;
+    }
+
     if (!userInput.trim()) {
       toast.error("Please enter some content to generate from");
       return;
@@ -116,18 +137,37 @@ const Index = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold gradient-text">Social Media Scribe</h1>
-        <Link to="/profile">
-          <Button variant="outline" className="gap-2">
-            <User className="h-4 w-4" />
-            Profile
-          </Button>
-        </Link>
+      <div className="flex justify-between items-center mb-8 flex-wrap gap-2">
+        <h1 className="text-3xl md:text-4xl font-bold gradient-text">Social Media Scribe</h1>
+        <div className="flex items-center gap-2">
+          {isAuthenticated ? (
+            <Link to="/profile">
+              <Button variant="outline" className="gap-2">
+                <User className="h-4 w-4" />
+                Profile
+              </Button>
+            </Link>
+          ) : (
+            <>
+              <Link to="/auth">
+                <Button variant="outline" className="gap-2">
+                  <LogIn className="h-4 w-4" />
+                  Sign In
+                </Button>
+              </Link>
+              <Link to="/auth">
+                <Button variant="default" className="gap-2">
+                  <UserPlus className="h-4 w-4" />
+                  Sign Up
+                </Button>
+              </Link>
+            </>
+          )}
+        </div>
       </div>
       
       <div className="text-center mb-8">
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
           Enter your content idea below and generate tailored posts for any social platform
         </p>
       </div>
@@ -148,7 +188,7 @@ const Index = () => {
             <Button 
               onClick={handleGenerateAll} 
               className="shiny-button text-white"
-              disabled={generatingPlatform !== null}
+              disabled={generatingPlatform !== null || !isAuthenticated}
             >
               {generatingPlatform === 'all' ? "Generating..." : "Generate All Platforms"}
             </Button>
@@ -156,7 +196,7 @@ const Index = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {platforms.map((platform) => (
           <PlatformCard
             key={platform}
@@ -164,6 +204,7 @@ const Index = () => {
             content={generatedContent[platform]}
             isGenerating={generatingPlatform === platform || generatingPlatform === 'all'}
             onClick={() => handleGenerate(platform)}
+            isAuthenticated={isAuthenticated}
           />
         ))}
       </div>

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Check, Copy, Share2 } from "lucide-react";
+import { Check, Copy, Share2, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -10,9 +10,10 @@ interface PlatformCardProps {
   content: string | null;
   isGenerating: boolean;
   onClick: () => void;
+  isAuthenticated: boolean;
 }
 
-const PlatformCard: React.FC<PlatformCardProps> = ({ platform, content, isGenerating, onClick }) => {
+const PlatformCard: React.FC<PlatformCardProps> = ({ platform, content, isGenerating, onClick, isAuthenticated }) => {
   const [copied, setCopied] = React.useState(false);
   
   const platformConfigs = {
@@ -60,41 +61,80 @@ const PlatformCard: React.FC<PlatformCardProps> = ({ platform, content, isGenera
     const url = config.url + encodeURIComponent(content);
     window.open(url, '_blank');
   };
+
+  const handlePostToPlatform = () => {
+    if (!content) return;
+    
+    // Different platforms have different sharing mechanisms
+    let url;
+    switch(platform) {
+      case 'twitter':
+        url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(content)}`;
+        break;
+      case 'facebook':
+        url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(content)}`;
+        break;
+      case 'linkedin':
+        url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}&summary=${encodeURIComponent(content)}`;
+        break;
+      case 'instagram':
+        // Instagram doesn't have a direct posting API, so we'll just show a message
+        toast.info("Instagram doesn't support direct posting. Copy the content and post manually.");
+        return;
+    }
+    
+    window.open(url, '_blank');
+    toast.success(`Opening ${platform} to post your content!`);
+  };
   
   const formatPlatformName = (name: string): string => {
     return name.charAt(0).toUpperCase() + name.slice(1);
   };
+  
+  const getBgColor = (platform: string): string => {
+    switch(platform) {
+      case 'twitter': return 'bg-social-twitter';
+      case 'instagram': return 'bg-social-instagram';
+      case 'facebook': return 'bg-social-facebook';
+      case 'linkedin': return 'bg-social-linkedin';
+      default: return 'bg-gray-500';
+    }
+  };
 
   return (
-    <div className={cn("platform-card animate-fade-in md:max-w-sm", config.color)}>
-      <div className="flex items-center mb-4 gap-2">
-        <div className={`p-2 rounded-full bg-${platform} text-white`}>
+    <div className={cn("platform-card animate-fade-in p-4", config.color)}>
+      <div className="flex items-center mb-3 gap-2">
+        <div className={`p-1.5 rounded-full ${getBgColor(platform)} text-white`}>
           {config.icon}
         </div>
-        <h3 className="text-lg font-semibold">{formatPlatformName(platform)}</h3>
+        <h3 className="text-base font-semibold">{formatPlatformName(platform)}</h3>
       </div>
 
-      <div className="content-card min-h-[150px] max-h-[200px] relative overflow-y-auto">
+      <div className="content-card min-h-[120px] max-h-[150px] relative overflow-y-auto mb-3">
         {isGenerating ? (
           <div className="flex items-center justify-center h-full">
             <div className="animate-pulse">Generating content...</div>
           </div>
         ) : content ? (
-          <div className="whitespace-pre-wrap">{content}</div>
+          <div className="whitespace-pre-wrap text-sm">{content}</div>
         ) : (
-          <div className="text-muted-foreground text-center h-full flex items-center justify-center">
-            Click "Generate" to create {formatPlatformName(platform)} content
+          <div className="text-muted-foreground text-center h-full flex items-center justify-center text-sm">
+            {isAuthenticated ? (
+              `Click "Generate" for ${formatPlatformName(platform)} content`
+            ) : (
+              "Sign in to generate content"
+            )}
           </div>
         )}
       </div>
 
-      <div className="mt-4 flex justify-between gap-2">
+      <div className="flex flex-wrap gap-2">
         <Button 
           variant="outline" 
           size="sm" 
           onClick={onClick} 
-          disabled={isGenerating}
-          className="flex-1"
+          disabled={isGenerating || !isAuthenticated}
+          className="flex-1 text-xs"
         >
           Generate
         </Button>
@@ -106,26 +146,33 @@ const PlatformCard: React.FC<PlatformCardProps> = ({ platform, content, isGenera
               size="sm" 
               onClick={copyToClipboard}
               disabled={isGenerating}
+              className="text-xs"
             >
               {copied ? (
-                <>
-                  <Check className="h-4 w-4 mr-1" />
-                  Copied
-                </>
+                <Check className="h-3 w-3 mr-1" />
               ) : (
-                <>
-                  <Copy className="h-4 w-4 mr-1" />
-                  Copy
-                </>
+                <Copy className="h-3 w-3 mr-1" />
               )}
+              Copy
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={handleShare}
               disabled={isGenerating}
+              className="text-xs"
             >
-              <Share2 className="h-4 w-4" />
+              <Share2 className="h-3 w-3" />
+            </Button>
+            <Button
+              variant="default"
+              size="sm"
+              onClick={handlePostToPlatform}
+              disabled={isGenerating}
+              className={`text-xs text-white ${getBgColor(platform)}`}
+            >
+              <ExternalLink className="h-3 w-3 mr-1" />
+              Post to {formatPlatformName(platform)}
             </Button>
           </>
         )}
