@@ -7,7 +7,7 @@ interface ContentFormProps {
   userInput: string;
   setUserInput: (input: string) => void;
   handleGenerateAll: () => void;
-  isGenerating: boolean;
+  isGenerating: string | boolean;
   isAuthenticated: boolean;
 }
 
@@ -35,7 +35,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
           <Button 
             onClick={handleGenerateAll} 
             className="shiny-button text-white"
-            disabled={isGenerating || !isAuthenticated}
+            disabled={isGenerating === true || isGenerating === 'all' || !isAuthenticated}
           >
             {isGenerating === 'all' ? "Generating..." : "Generate All Platforms"}
           </Button>
