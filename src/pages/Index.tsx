@@ -33,7 +33,13 @@ const Index = () => {
 
   const handleGenerate = async (platform: string) => {
     if (!isAuthenticated) {
-      toast.error("Please sign in to generate content");
+      toast.error("Please sign in to generate content", {
+        description: "Sign in or create an account to start generating content",
+        action: {
+          label: "Sign In",
+          onClick: () => window.location.href = "/auth"
+        },
+      });
       return;
     }
 
@@ -81,7 +87,13 @@ const Index = () => {
 
   const handleGenerateAll = async () => {
     if (!isAuthenticated) {
-      toast.error("Please sign in to generate content");
+      toast.error("Please sign in to generate content", {
+        description: "Sign in or create an account to start generating content",
+        action: {
+          label: "Sign In",
+          onClick: () => window.location.href = "/auth"
+        },
+      });
       return;
     }
 

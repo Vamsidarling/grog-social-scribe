@@ -101,6 +101,21 @@ const PlatformCard: React.FC<PlatformCardProps> = ({ platform, content, isGenera
     }
   };
 
+  const handleGenerateClick = () => {
+    if (!isAuthenticated) {
+      toast.error("Please sign in to generate content", {
+        description: "Sign in or create an account to start generating content",
+        action: {
+          label: "Sign In",
+          onClick: () => window.location.href = "/auth"
+        },
+      });
+      return;
+    }
+    
+    onClick();
+  };
+
   return (
     <div className={cn("platform-card animate-fade-in p-4", config.color)}>
       <div className="flex items-center mb-3 gap-2">
@@ -132,8 +147,8 @@ const PlatformCard: React.FC<PlatformCardProps> = ({ platform, content, isGenera
         <Button 
           variant="outline" 
           size="sm" 
-          onClick={onClick} 
-          disabled={isGenerating || !isAuthenticated}
+          onClick={handleGenerateClick} 
+          disabled={isGenerating}
           className="flex-1 text-xs"
         >
           Generate
