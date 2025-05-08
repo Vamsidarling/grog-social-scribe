@@ -2,12 +2,13 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Sparkles } from 'lucide-react';
 
 /**
  * ContentForm Component
  * 
- * Form for inputting content ideas and generating social media posts.
- * Provides a text area for user input and a button to trigger content generation.
+ * Enhanced form for inputting content ideas and generating social media posts.
+ * Features a visually appealing textarea with better styling and an animated submit button.
  * 
  * @param {Object} props - Component properties
  * @param {string} props.userInput - Current user input value
@@ -24,9 +25,9 @@ const ContentForm: React.FC<ContentFormProps> = ({
   isAuthenticated
 }) => {
   return (
-    <div className="max-w-3xl mx-auto mb-8">
-      <div className="space-y-4">
-        <label htmlFor="content-idea" className="block text-lg font-medium">
+    <div className="max-w-3xl mx-auto mb-8 transform transition-all duration-300 hover:scale-[1.01]">
+      <div className="space-y-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border shadow-sm">
+        <label htmlFor="content-idea" className="block text-lg font-medium text-gray-700 dark:text-gray-200">
           What would you like to create content about?
         </label>
         <Textarea
@@ -34,15 +35,25 @@ const ContentForm: React.FC<ContentFormProps> = ({
           placeholder="Describe your product, event, announcement, or any topic you want to create social media posts about..."
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
-          className="min-h-32"
+          className="min-h-32 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
         />
         <div className="flex justify-end">
           <Button 
             onClick={handleGenerateAll} 
-            className="shiny-button text-white"
+            className="shiny-button text-white gap-2"
             disabled={isGenerating === true || isGenerating === 'all'}
           >
-            {isGenerating === 'all' ? "Generating..." : "Generate All Platforms"}
+            {isGenerating === 'all' ? (
+              <>
+                <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span>
+                <span>Generating...</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-4 w-4" />
+                <span>Generate All Platforms</span>
+              </>
+            )}
           </Button>
         </div>
       </div>

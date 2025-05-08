@@ -13,29 +13,38 @@ import Profile from "./pages/Profile";
 /**
  * Create a new QueryClient instance for React Query
  */
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1
+    },
+  },
+});
 
 /**
  * App Component
  * 
  * Root component of the application that sets up:
- * - React Query for data fetching
- * - Toast notifications
- * - Routing with React Router
+ * - React Query for data fetching with optimized configuration
+ * - Toast notifications with enhanced styling
+ * - Routing with React Router and page transitions
  * - Tooltip provider for UI components
  */
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
-      <Sonner />
+      <Sonner position="top-right" closeButton theme="system" />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/profile" element={<AuthLayout><Profile /></AuthLayout>} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <main className="min-h-screen pt-4 pb-12 transition-all duration-300">
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/profile" element={<AuthLayout><Profile /></AuthLayout>} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

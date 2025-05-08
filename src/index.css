@@ -33,7 +33,7 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 262 83% 63%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -89,8 +89,12 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-300;
     background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   }
   
@@ -104,22 +108,76 @@
 }
 
 .shiny-button {
-  @apply bg-gradient-to-r from-brand-purple via-brand-indigo to-brand-purple bg-[length:200%_100%] animate-shine;
+  @apply bg-gradient-to-r from-brand-purple via-brand-indigo to-brand-purple bg-[length:200%_100%] animate-shine relative overflow-hidden shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300;
+}
+
+.shiny-button::after {
+  content: '';
+  @apply absolute top-0 left-0 w-full h-full bg-white/10 transform -translate-x-full skew-x-12;
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  50% {
+    transform: translateX(100%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(100%) skewX(-15deg);
+  }
 }
 
 .platform-card {
-  @apply rounded-xl p-6 border transition-all duration-300 hover:shadow-md dark:border-gray-700 dark:hover:shadow-gray-800;
+  @apply rounded-xl p-6 border transition-all duration-300 hover:shadow-lg dark:border-gray-700 dark:hover:shadow-gray-800 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80 transform hover:-translate-y-1;
 }
 
 .content-card {
-  @apply border rounded-lg p-4 bg-white shadow-sm dark:bg-gray-800 dark:border-gray-700;
+  @apply border rounded-lg p-4 bg-white/80 backdrop-blur-sm shadow-sm dark:bg-gray-800/80 dark:border-gray-700 transition-all duration-200;
+}
+
+/**
+ * Animation Classes
+ */
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scale-in {
+  animation: scaleIn 0.3s ease-out forwards;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /**
  * Documentation of CSS Classes
  *
  * .gradient-text - Creates a gradient text effect for headings
- * .shiny-button - Creates an animated gradient button
- * .platform-card - Styling for platform selection cards
- * .content-card - Styling for generated content display
+ * .shiny-button - Creates an animated gradient button with shimmer effect
+ * .platform-card - Styling for platform selection cards with hover effects
+ * .content-card - Styling for generated content display with backdrop blur
+ * .fade-in - Adds fade-in animation to elements
+ * .scale-in - Adds scale-in animation to elements
  */
+
