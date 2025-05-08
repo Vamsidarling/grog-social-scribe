@@ -10,8 +10,20 @@ import NotFound from "./pages/NotFound";
 import AuthLayout from "./layouts/AuthLayout";
 import Profile from "./pages/Profile";
 
+/**
+ * Create a new QueryClient instance for React Query
+ */
 const queryClient = new QueryClient();
 
+/**
+ * App Component
+ * 
+ * Root component of the application that sets up:
+ * - React Query for data fetching
+ * - Toast notifications
+ * - Routing with React Router
+ * - Tooltip provider for UI components
+ */
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>

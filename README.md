@@ -1,73 +1,113 @@
-# Welcome to your Lovable project
 
-## Project info
+# Social Media Scribe
 
-**URL**: https://lovable.dev/projects/1c91aaaa-234c-4ffa-ae54-aa06595e96c1
+A modern web application for effortlessly generating tailored content for different social media platforms.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- **Multi-Platform Content Generation**: Create unique, platform-optimized social media posts for Twitter, Instagram, Facebook, and LinkedIn.
+- **User Authentication**: Secure user accounts with Supabase authentication.
+- **Responsive Design**: Fully responsive layout works on any device.
+- **Dark/Light Mode**: Toggle between color schemes based on user preference.
+- **Content History**: Save and access previously generated content.
 
-**Use Lovable**
+## Technology Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1c91aaaa-234c-4ffa-ae54-aa06595e96c1) and start prompting.
+- **Frontend**:
+  - React with TypeScript
+  - Tailwind CSS for styling
+  - shadcn/ui component library
+  - React Router for navigation
+  - Tanstack React Query for data fetching
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Backend**:
+  - Supabase for authentication and database
+  - Edge Functions for content generation
 
-**Use your preferred IDE**
+## Project Structure
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```
+src/
+├── components/          # Reusable UI components
+│   ├── ui/              # shadcn/ui components
+│   ├── BackButton.tsx   # Navigation back button
+│   ├── ContentForm.tsx  # User input form
+│   ├── Header.tsx       # Application header
+│   ├── PlatformCard.tsx # Social platform cards
+│   └── ThemeToggle.tsx  # Dark/light mode toggle
+├── hooks/               # Custom React hooks
+│   ├── useAuth.tsx              # Authentication state management
+│   ├── useContentGeneration.tsx # Content generation logic
+│   └── useTheme.tsx             # Theme management
+├── integrations/        # External service integrations
+│   └── supabase/        # Supabase client and types
+├── layouts/             # Page layout components
+│   └── AuthLayout.tsx   # Layout for authenticated pages
+├── lib/                 # Utility libraries
+│   └── utils.ts         # General utility functions
+├── pages/               # Application pages
+│   ├── Auth.tsx         # Authentication page
+│   ├── Index.tsx        # Home page
+│   ├── NotFound.tsx     # 404 page
+│   └── Profile.tsx      # User profile page
+├── services/            # API services
+│   └── grogService.ts   # Content generation service
+├── App.tsx              # Main application component
+└── main.tsx             # Application entry point
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Getting Started
 
-Follow these steps:
+### Prerequisites
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- Node.js (v16+)
+- npm or yarn
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Installation
 
-# Step 3: Install the necessary dependencies.
-npm i
+1. Clone the repository
+```
+git clone https://github.com/yourusername/social-media-scribe.git
+cd social-media-scribe
+```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+2. Install dependencies
+```
+npm install
+```
+
+3. Start the development server
+```
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+4. Open your browser and navigate to `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Environment Variables
 
-**Use GitHub Codespaces**
+Create a `.env.local` file in the root directory with the following variables:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```
+VITE_SUPABASE_URL=your-supabase-url
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
 
-## What technologies are used for this project?
+## Deployment
 
-This project is built with:
+This project can be deployed using Lovable:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+1. Navigate to your project in Lovable
+2. Click on "Share" -> "Publish"
+3. Follow the deployment instructions
 
-## How can I deploy this project?
+## Contributing
 
-Simply open [Lovable](https://lovable.dev/projects/1c91aaaa-234c-4ffa-ae54-aa06595e96c1) and click on Share -> Publish.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## Can I connect a custom domain to my Lovable project?
+## License
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+This project is licensed under the MIT License - see the LICENSE file for details.

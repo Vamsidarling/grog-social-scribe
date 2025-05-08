@@ -6,8 +6,21 @@ import ContentForm from '@/components/ContentForm';
 import { useAuth } from '@/hooks/useAuth';
 import { useContentGeneration } from '@/hooks/useContentGeneration';
 
+/**
+ * List of supported social media platforms
+ */
 const platforms = ['twitter', 'instagram', 'facebook', 'linkedin'];
 
+/**
+ * Index Page Component
+ * 
+ * Home page of the application that allows users to:
+ * - Enter content ideas
+ * - Generate tailored posts for different social platforms
+ * - View and copy generated content
+ * 
+ * Uses custom hooks for authentication and content generation.
+ */
 const Index = () => {
   const { isAuthenticated } = useAuth();
   const {

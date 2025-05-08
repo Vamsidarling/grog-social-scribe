@@ -3,14 +3,19 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
-interface ContentFormProps {
-  userInput: string;
-  setUserInput: (input: string) => void;
-  handleGenerateAll: () => void;
-  isGenerating: string | boolean;
-  isAuthenticated: boolean;
-}
-
+/**
+ * ContentForm Component
+ * 
+ * Form for inputting content ideas and generating social media posts.
+ * Provides a text area for user input and a button to trigger content generation.
+ * 
+ * @param {Object} props - Component properties
+ * @param {string} props.userInput - Current user input value
+ * @param {function} props.setUserInput - Function to update user input
+ * @param {function} props.handleGenerateAll - Function to generate content for all platforms
+ * @param {string|boolean} props.isGenerating - Flag indicating if content is being generated
+ * @param {boolean} props.isAuthenticated - Whether user is authenticated
+ */
 const ContentForm: React.FC<ContentFormProps> = ({
   userInput,
   setUserInput,
@@ -44,5 +49,13 @@ const ContentForm: React.FC<ContentFormProps> = ({
     </div>
   );
 };
+
+interface ContentFormProps {
+  userInput: string;
+  setUserInput: (input: string) => void;
+  handleGenerateAll: () => void;
+  isGenerating: string | boolean;
+  isAuthenticated: boolean;
+}
 
 export default ContentForm;
