@@ -6,20 +6,12 @@ import ContentForm from '@/components/ContentForm';
 import { useAuth } from '@/hooks/useAuth';
 import { useContentGeneration } from '@/hooks/useContentGeneration';
 
-/**
- * List of supported social media platforms
- */
 const platforms = ['twitter', 'instagram', 'facebook', 'linkedin'];
 
 /**
  * Index Page Component
  * 
- * Home page of the application that allows users to:
- * - Enter content ideas
- * - Generate tailored posts for different social platforms
- * - View and copy generated content
- * 
- * Uses custom hooks for authentication and content generation.
+ * Clean and organized home page with improved layout
  */
 const Index = () => {
   const { isAuthenticated } = useAuth();
@@ -33,34 +25,36 @@ const Index = () => {
   } = useContentGeneration(isAuthenticated);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <Header isAuthenticated={isAuthenticated} showBackButton={false} />
-      
-      <div className="text-center mb-8">
-        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-          Enter your content idea below and generate tailored posts for any social platform
-        </p>
-      </div>
-      
-      <ContentForm 
-        userInput={userInput}
-        setUserInput={setUserInput}
-        handleGenerateAll={handleGenerateAll}
-        isGenerating={generatingPlatform === 'all'}
-        isAuthenticated={isAuthenticated}
-      />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+      <div className="container mx-auto px-4 py-8">
+        <Header isAuthenticated={isAuthenticated} showBackButton={false} />
+        
+        <div className="text-center mb-12">
+          <h2 className="text-xl md:text-2xl text-gray-700 dark:text-gray-200 font-medium max-w-3xl mx-auto leading-relaxed">
+            Transform your ideas into engaging social media content across all platforms
+          </h2>
+        </div>
+        
+        <ContentForm 
+          userInput={userInput}
+          setUserInput={setUserInput}
+          handleGenerateAll={handleGenerateAll}
+          isGenerating={generatingPlatform === 'all'}
+          isAuthenticated={isAuthenticated}
+        />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {platforms.map((platform) => (
-          <PlatformCard
-            key={platform}
-            platform={platform}
-            content={generatedContent[platform]}
-            isGenerating={generatingPlatform === platform || generatingPlatform === 'all'}
-            onClick={() => handleGenerate(platform)}
-            isAuthenticated={isAuthenticated}
-          />
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          {platforms.map((platform) => (
+            <PlatformCard
+              key={platform}
+              platform={platform}
+              content={generatedContent[platform]}
+              isGenerating={generatingPlatform === platform || generatingPlatform === 'all'}
+              onClick={() => handleGenerate(platform)}
+              isAuthenticated={isAuthenticated}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
