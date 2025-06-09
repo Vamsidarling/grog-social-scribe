@@ -9,9 +9,9 @@ import { useContentGeneration } from '@/hooks/useContentGeneration';
 const platforms = ['twitter', 'instagram', 'facebook', 'linkedin'];
 
 /**
- * Index Page Component
+ * Index Page Component - Peaky Blinders Theme
  * 
- * Clean and organized home page with improved layout
+ * Dark, sophisticated home page with vintage 1920s aesthetics
  */
 const Index = () => {
   const { isAuthenticated } = useAuth();
@@ -25,14 +25,23 @@ const Index = () => {
   } = useContentGeneration(isAuthenticated);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-peaky-dark bg-peaky-pattern">
       <div className="container mx-auto px-4 py-8">
         <Header isAuthenticated={isAuthenticated} showBackButton={false} />
         
-        <div className="text-center mb-12">
-          <h2 className="text-xl md:text-2xl text-gray-700 dark:text-gray-200 font-medium max-w-3xl mx-auto leading-relaxed">
-            Transform your ideas into engaging social media content across all platforms
-          </h2>
+        {/* Hero Section */}
+        <div className="text-center mb-16 animate-fade-in">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl md:text-4xl font-playfair font-bold text-foreground mb-6 leading-tight">
+              "By order of the{' '}
+              <span className="peaky-text-gradient">Peaky Blinders</span>
+              "
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground font-source max-w-3xl mx-auto leading-relaxed">
+              Command your social presence with the precision and authority of Birmingham's finest. 
+              Transform your thoughts into powerful content across all platforms.
+            </p>
+          </div>
         </div>
         
         <ContentForm 
@@ -43,16 +52,21 @@ const Index = () => {
           isAuthenticated={isAuthenticated}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-          {platforms.map((platform) => (
-            <PlatformCard
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 animate-slide-up">
+          {platforms.map((platform, index) => (
+            <div 
               key={platform}
-              platform={platform}
-              content={generatedContent[platform]}
-              isGenerating={generatingPlatform === platform || generatingPlatform === 'all'}
-              onClick={() => handleGenerate(platform)}
-              isAuthenticated={isAuthenticated}
-            />
+              className="animate-scale-in"
+              style={{ animationDelay: `${index * 150}ms` }}
+            >
+              <PlatformCard
+                platform={platform}
+                content={generatedContent[platform]}
+                isGenerating={generatingPlatform === platform || generatingPlatform === 'all'}
+                onClick={() => handleGenerate(platform)}
+                isAuthenticated={isAuthenticated}
+              />
+            </div>
           ))}
         </div>
       </div>

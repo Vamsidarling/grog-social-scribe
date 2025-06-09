@@ -5,11 +5,9 @@ import { Button } from '@/components/ui/button';
 import { Moon, Sun } from 'lucide-react';
 
 /**
- * ThemeToggle Component
+ * ThemeToggle Component - Peaky Blinders Theme
  * 
- * A visually enhanced button that toggles between light and dark mode.
- * Features smooth animations and icon transitions.
- * Uses the useTheme hook to access and change the current theme.
+ * Sophisticated theme toggle with vintage styling
  */
 const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
@@ -19,16 +17,16 @@ const ThemeToggle = () => {
       variant="outline" 
       size="icon" 
       onClick={toggleTheme}
-      className="rounded-full w-10 h-10 border border-input bg-background relative overflow-hidden transition-all duration-300 hover:scale-105"
+      className="rounded-lg w-12 h-12 vintage-border bg-transparent hover:bg-peaky-ash/30 relative overflow-hidden transition-all duration-300 hover:scale-105 group"
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
     >
       <span className="sr-only">{theme === 'dark' ? 'Light' : 'Dark'} mode</span>
       
-      <div className="transition-all duration-300 transform">
+      <div className="transition-all duration-300 transform group-hover:scale-110">
         {theme === 'dark' ? (
-          <Moon className="h-5 w-5 transition-all" />
+          <Moon className="h-5 w-5 text-peaky-gold transition-all" />
         ) : (
-          <Sun className="h-5 w-5 transition-all" />
+          <Sun className="h-5 w-5 text-peaky-gold transition-all" />
         )}
       </div>
     </Button>

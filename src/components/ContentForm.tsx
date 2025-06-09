@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Sparkles, Lightbulb } from 'lucide-react';
+import { Sparkles, PenTool, Quote } from 'lucide-react';
 
 interface ContentFormProps {
   userInput: string;
@@ -13,9 +13,9 @@ interface ContentFormProps {
 }
 
 /**
- * ContentForm Component
+ * ContentForm Component - Peaky Blinders Theme
  * 
- * Clean and modern form for content input with improved styling
+ * Sophisticated form with vintage Birmingham aesthetics
  */
 const ContentForm: React.FC<ContentFormProps> = ({
   userInput,
@@ -25,46 +25,55 @@ const ContentForm: React.FC<ContentFormProps> = ({
   isAuthenticated
 }) => {
   return (
-    <div className="max-w-4xl mx-auto mb-12">
-      <div className="bg-white dark:bg-gray-900/50 border-2 border-gray-200 dark:border-gray-700 rounded-2xl p-8 shadow-lg">
+    <div className="max-w-5xl mx-auto mb-16">
+      <div className="peaky-card rounded-xl p-10 backdrop-blur-sm animate-scale-in">
         {/* Header */}
-        <div className="text-center mb-6">
-          <div className="flex items-center justify-center gap-2 mb-3">
-            <Lightbulb className="h-6 w-6 text-primary" />
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-              Create Your Content
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <PenTool className="h-7 w-7 text-peaky-gold" />
+            <h2 className="text-3xl font-playfair font-bold text-foreground">
+              Craft Your Message
             </h2>
           </div>
-          <p className="text-gray-600 dark:text-gray-300">
-            Describe your topic and we'll generate engaging posts for all platforms
-          </p>
+          <div className="flex items-center justify-center gap-2 text-muted-foreground">
+            <Quote className="h-4 w-4 text-peaky-gold" />
+            <p className="font-source text-lg italic">
+              "In the bleak midwinter, we write our own stories"
+            </p>
+            <Quote className="h-4 w-4 text-peaky-gold rotate-180" />
+          </div>
         </div>
 
         {/* Input Area */}
-        <div className="space-y-4">
-          <Textarea
-            placeholder="Tell us about your product launch, event announcement, or any topic you want to share on social media..."
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-            className="min-h-32 text-base border-2 border-gray-300 dark:border-gray-600 rounded-xl bg-gray-50 dark:bg-gray-800/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all resize-none"
-            rows={4}
-          />
+        <div className="space-y-6">
+          <div className="relative">
+            <Textarea
+              placeholder="Share your vision, announce your triumph, or declare your intentions... What story shall we tell today?"
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+              className="min-h-40 text-lg font-source vintage-border bg-peaky-charcoal/30 text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-peaky-gold/50 transition-all resize-none backdrop-blur-sm"
+              rows={5}
+            />
+            <div className="absolute bottom-4 right-4 text-xs text-muted-foreground font-source">
+              {userInput.length} characters
+            </div>
+          </div>
           
           <div className="flex justify-center">
             <Button 
               onClick={handleGenerateAll} 
               disabled={!userInput.trim() || isGenerating === true || isGenerating === 'all'}
-              className="bg-gradient-to-r from-primary to-secondary text-white px-8 py-3 text-lg font-medium rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50"
+              className="peaky-button text-peaky-dark px-12 py-4 text-xl font-playfair font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed group"
             >
               {isGenerating === 'all' ? (
-                <div className="flex items-center gap-2">
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Generating Content...</span>
+                <div className="flex items-center gap-3">
+                  <div className="w-6 h-6 border-2 border-peaky-dark border-t-transparent rounded-full animate-spin"></div>
+                  <span>Crafting Content...</span>
                 </div>
               ) : (
-                <div className="flex items-center gap-2">
-                  <Sparkles className="h-5 w-5" />
-                  <span>Generate All Platforms</span>
+                <div className="flex items-center gap-3">
+                  <Sparkles className="h-6 w-6 group-hover:animate-pulse" />
+                  <span>Command All Platforms</span>
                 </div>
               )}
             </Button>
@@ -72,9 +81,9 @@ const ContentForm: React.FC<ContentFormProps> = ({
         </div>
 
         {!isAuthenticated && (
-          <div className="mt-4 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
-            <p className="text-sm text-amber-800 dark:text-amber-200 text-center">
-              <strong>Sign in</strong> to save your content history and access all features
+          <div className="mt-8 p-6 vintage-border bg-peaky-bronze/10 rounded-lg backdrop-blur-sm">
+            <p className="text-center text-peaky-gold font-source font-medium">
+              <strong>Join the family</strong> to preserve your content history and unlock the full power of the Peaky Blinders
             </p>
           </div>
         )}
