@@ -58,7 +58,9 @@ export default {
 					bronze: 'rgb(var(--peaky-bronze))',
 					dark: 'rgb(var(--peaky-dark))',
 					charcoal: 'rgb(var(--peaky-charcoal))',
-					ash: 'rgb(var(--peaky-ash))'
+					ash: 'rgb(var(--peaky-ash))',
+					light: 'rgb(var(--peaky-light))',
+					cream: 'rgb(var(--peaky-cream))'
 				},
                 social: {
                     twitter: '#1DA1F2',

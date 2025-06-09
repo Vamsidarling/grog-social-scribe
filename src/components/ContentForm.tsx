@@ -31,11 +31,11 @@ const ContentForm: React.FC<ContentFormProps> = ({
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <PenTool className="h-7 w-7 text-peaky-gold" />
-            <h2 className="text-3xl font-playfair font-bold text-foreground">
+            <h2 className="text-3xl font-playfair font-bold text-peaky-light">
               Craft Your Message
             </h2>
           </div>
-          <div className="flex items-center justify-center gap-2 text-muted-foreground">
+          <div className="flex items-center justify-center gap-2 text-muted-elegant">
             <Quote className="h-4 w-4 text-peaky-gold" />
             <p className="font-source text-lg italic">
               "In the bleak midwinter, we write our own stories"
@@ -51,10 +51,10 @@ const ContentForm: React.FC<ContentFormProps> = ({
               placeholder="Share your vision, announce your triumph, or declare your intentions... What story shall we tell today?"
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
-              className="min-h-40 text-lg font-source vintage-border bg-peaky-charcoal/30 text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-peaky-gold/50 transition-all resize-none backdrop-blur-sm"
+              className="min-h-40 text-lg font-source vintage-border bg-peaky-charcoal/30 text-peaky-light placeholder:text-muted-elegant focus:ring-2 focus:ring-peaky-gold/50 transition-all resize-none backdrop-blur-sm"
               rows={5}
             />
-            <div className="absolute bottom-4 right-4 text-xs text-muted-foreground font-source">
+            <div className="absolute bottom-4 right-4 text-xs text-muted-elegant font-source">
               {userInput.length} characters
             </div>
           </div>
@@ -63,7 +63,7 @@ const ContentForm: React.FC<ContentFormProps> = ({
             <Button 
               onClick={handleGenerateAll} 
               disabled={!userInput.trim() || isGenerating === true || isGenerating === 'all'}
-              className="peaky-button text-peaky-dark px-12 py-4 text-xl font-playfair font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed group"
+              className="peaky-button px-12 py-4 text-xl font-playfair font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed group"
             >
               {isGenerating === 'all' ? (
                 <div className="flex items-center gap-3">

@@ -43,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({ isAuthenticated, showBackButton = true 
               <Link to="/profile">
                 <Button 
                   variant="outline" 
-                  className="gap-2 vintage-border bg-transparent text-foreground hover:bg-peaky-ash/50 transition-all duration-300 font-source"
+                  className="gap-2 vintage-border bg-transparent text-peaky-light hover:bg-peaky-ash/50 transition-all duration-300 font-source"
                 >
                   <User className="h-4 w-4" />
                   Profile
@@ -54,14 +54,14 @@ const Header: React.FC<HeaderProps> = ({ isAuthenticated, showBackButton = true 
                 <Link to="/auth">
                   <Button 
                     variant="outline" 
-                    className="gap-2 vintage-border bg-transparent text-foreground hover:bg-peaky-ash/50 font-source"
+                    className="gap-2 vintage-border bg-transparent text-peaky-light hover:bg-peaky-ash/50 font-source"
                   >
                     <LogIn className="h-4 w-4" />
                     Sign In
                   </Button>
                 </Link>
                 <Link to="/auth">
-                  <Button className="gap-2 peaky-button text-peaky-dark font-source font-semibold">
+                  <Button className="gap-2 peaky-button font-source font-semibold">
                     <UserPlus className="h-4 w-4" />
                     Sign Up
                   </Button>

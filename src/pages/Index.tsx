@@ -32,12 +32,12 @@ const Index = () => {
         {/* Hero Section */}
         <div className="text-center mb-16 animate-fade-in">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl md:text-4xl font-playfair font-bold text-foreground mb-6 leading-tight">
+            <h2 className="text-2xl md:text-4xl font-playfair font-bold text-peaky-light mb-6 leading-tight">
               "By order of the{' '}
               <span className="peaky-text-gradient">Peaky Blinders</span>
               "
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground font-source max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-muted-elegant font-source max-w-3xl mx-auto leading-relaxed">
               Command your social presence with the precision and authority of Birmingham's finest. 
               Transform your thoughts into powerful content across all platforms.
             </p>

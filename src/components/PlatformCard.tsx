@@ -95,8 +95,8 @@ const PlatformCard: React.FC<PlatformCardProps> = ({ platform, content, isGenera
           {config.icon}
         </div>
         <div>
-          <h3 className="text-xl font-playfair font-bold text-foreground">{config.name}</h3>
-          <p className="text-sm text-muted-foreground font-source italic">{config.subtitle}</p>
+          <h3 className="text-xl font-playfair font-bold text-peaky-light">{config.name}</h3>
+          <p className="text-sm text-muted-elegant font-source italic">{config.subtitle}</p>
         </div>
       </div>
 
@@ -105,16 +105,16 @@ const PlatformCard: React.FC<PlatformCardProps> = ({ platform, content, isGenera
         {isGenerating ? (
           <div className="flex flex-col items-center justify-center h-full gap-4">
             <div className="w-10 h-10 border-3 border-peaky-gold border-t-transparent rounded-full animate-spin"></div>
-            <span className="text-sm text-muted-foreground font-source">Crafting your message...</span>
+            <span className="text-sm text-muted-elegant font-source">Crafting your message...</span>
           </div>
         ) : content ? (
-          <div className="text-sm text-foreground leading-relaxed whitespace-pre-wrap font-source">
+          <div className="text-sm text-peaky-light leading-relaxed whitespace-pre-wrap font-source">
             {content}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center h-full text-center gap-3">
             <Zap className="h-8 w-8 text-peaky-gold/50" />
-            <span className="text-muted-foreground text-sm font-source">
+            <span className="text-muted-elegant text-sm font-source">
               {isAuthenticated ? `Generate ${config.name} content` : "Join the family to generate content"}
             </span>
           </div>
@@ -126,7 +126,7 @@ const PlatformCard: React.FC<PlatformCardProps> = ({ platform, content, isGenera
         <Button 
           onClick={handleGenerateClick} 
           disabled={isGenerating}
-          className="flex-1 peaky-button text-peaky-dark font-source font-semibold"
+          className="flex-1 peaky-button font-source font-semibold"
         >
           {isGenerating ? "Crafting..." : "Generate"}
         </Button>
@@ -139,7 +139,7 @@ const PlatformCard: React.FC<PlatformCardProps> = ({ platform, content, isGenera
               onClick={copyToClipboard}
               className="vintage-border bg-transparent hover:bg-peaky-ash/30"
             >
-              {copied ? <Check className="h-4 w-4 text-peaky-gold" /> : <Copy className="h-4 w-4" />}
+              {copied ? <Check className="h-4 w-4 text-peaky-gold" /> : <Copy className="h-4 w-4 text-peaky-light" />}
             </Button>
             <Button
               variant="outline"
@@ -147,7 +147,7 @@ const PlatformCard: React.FC<PlatformCardProps> = ({ platform, content, isGenera
               onClick={handleShare}
               className="vintage-border bg-transparent hover:bg-peaky-ash/30"
             >
-              <ExternalLink className="h-4 w-4" />
+              <ExternalLink className="h-4 w-4 text-peaky-light" />
             </Button>
           </>
         )}
